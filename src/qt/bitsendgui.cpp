@@ -111,6 +111,7 @@ BitsendGUI::BitsendGUI(const PlatformStyle *_platformStyle, const NetworkStyle *
     optionsAction(0),
     toggleHideAction(0),
     encryptWalletAction(0),
+    unlockWalletAction(0),
     backupWalletAction(0),
     changePassphraseAction(0),
     aboutQtAction(0),
@@ -382,6 +383,9 @@ void BitsendGUI::createActions()
     encryptWalletAction = new QAction(platformStyle->TextColorIcon(":/icons/lock_closed"), tr("&Encrypt Wallet..."), this);
     encryptWalletAction->setStatusTip(tr("Encrypt the private keys that belong to your wallet"));
     encryptWalletAction->setCheckable(true);
+    unlockWalletAction = new QAction(platformStyle->TextColorIcon(":/icons/lock_closed"), tr("&Unlock Wallet..."), this);
+    unlockWalletAction->setStatusTip(tr("Unlock the wallet"));
+    unlockWalletAction->setCheckable(true);
     backupWalletAction = new QAction(platformStyle->TextColorIcon(":/icons/filesave"), tr("&Backup Wallet..."), this);
     backupWalletAction->setStatusTip(tr("Backup wallet to another location"));
     changePassphraseAction = new QAction(platformStyle->TextColorIcon(":/icons/key"), tr("&Change Passphrase..."), this);
@@ -436,6 +440,7 @@ void BitsendGUI::createActions()
     if(walletFrame)
     {
         connect(encryptWalletAction, SIGNAL(triggered(bool)), walletFrame, SLOT(encryptWallet(bool)));
+        connect(unlockWalletAction, SIGNAL(triggered(bool)), walletFrame, SLOT(unlockWallet(bool)));
         connect(backupWalletAction, SIGNAL(triggered()), walletFrame, SLOT(backupWallet()));
         connect(changePassphraseAction, SIGNAL(triggered()), walletFrame, SLOT(changePassphrase()));
         connect(signMessageAction, SIGNAL(triggered()), this, SLOT(gotoSignMessageTab()));
@@ -481,6 +486,7 @@ void BitsendGUI::createMenuBar()
     {
         settings->addAction(encryptWalletAction);
         settings->addAction(changePassphraseAction);
+        settings->addAction(unlockWalletAction);
 		//settings->addAction(bip38ToolAction);
         settings->addSeparator();
     }
@@ -617,6 +623,7 @@ void BitsendGUI::setWalletActionsEnabled(bool enabled)
 	//kaali
 	masternodeAction->setEnabled(enabled);
 	//bip38ToolAction->setEnabled(enabled);
+    unlockWalletAction -> setEnabled(enabled);
     encryptWalletAction->setEnabled(enabled);
     backupWalletAction->setEnabled(enabled);
     changePassphraseAction->setEnabled(enabled);

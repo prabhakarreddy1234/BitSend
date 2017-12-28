@@ -120,6 +120,7 @@ private:
     QAction *openRPCConsoleAction;
     QAction *openAction;
     QAction *showHelpMessageAction;
+    QAction *unlockWalletAction;
 
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
